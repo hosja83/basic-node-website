@@ -5,29 +5,29 @@ const about = "./about.html";
 const contactMe = "./contact-me.html";
 const errorPage = "./404.html";
 
-http.createServer( (req, res) => {
-   if (req.url === '/') {
-      fs.readFile(index, "utf-8", (err, data) => {
-         if (err) handleReadFileErr(index, err, res);
-         handleReadFileSuccess(res, data);
-      });
-   } else if (req.url === '/about' || req.url === '/about/') {
-      fs.readFile(about, "utf-8", (err, data) => {
-         if (err) handleReadFileErr(about, err, res);
-         handleReadFileSuccess(res, data);
-      });
-   } else if (req.url === '/contact-me' || req.url === '/contact-me/') {
-      fs.readFile(contactMe, "utf-8", (err, data) => {
-         if (err) handleReadFileErr(contactMe, err, res);
-         handleReadFileSuccess(res, data);
-      });
-   } else {
-      fs.readFile(errorPage, "utf-8", (err, data) => {
-         if (err) handleReadFileErr(errorPage, err, res);
-         handleReadFileSuccess(res, data);
-      });
-   }
-}).listen(8080, () => console.log("Server is running at port 8080."));
+// http.createServer( (req, res) => {
+//    if (req.url === '/') {
+//       fs.readFile(index, "utf-8", (err, data) => {
+//          if (err) handleReadFileErr(index, err, res);
+//          handleReadFileSuccess(res, data);
+//       });
+//    } else if (req.url === '/about' || req.url === '/about/') {
+//       fs.readFile(about, "utf-8", (err, data) => {
+//          if (err) handleReadFileErr(about, err, res);
+//          handleReadFileSuccess(res, data);
+//       });
+//    } else if (req.url === '/contact-me' || req.url === '/contact-me/') {
+//       fs.readFile(contactMe, "utf-8", (err, data) => {
+//          if (err) handleReadFileErr(contactMe, err, res);
+//          handleReadFileSuccess(res, data);
+//       });
+//    } else {
+//       fs.readFile(errorPage, "utf-8", (err, data) => {
+//          if (err) handleReadFileErr(errorPage, err, res);
+//          handleReadFileSuccess(res, data);
+//       });
+//    }
+// }).listen(8080, () => console.log("Server is running at port 8080."));
 
 function handleReadFileErr(filename, err, res) {
    console.error(`Cannot read ${filename} due to ${err}`);
@@ -39,3 +39,29 @@ function handleReadFileSuccess(res, data) {
    res.writeHead(404, {"Content-Type": 'text/html'});
    res.end(data);
 }
+
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+   fs.readFile(index, "utf-8", (err, data) => {
+      if (err) handleReadFileErr(index, err, res);
+      handleReadFileSuccess(res, data);
+   });
+});
+
+app.get('/contact-me', (req, res) => {
+   fs.readFile(contactMe, "utf-8", (err, data) => {
+      if (err) handleReadFileErr(contactMe, err, res);
+      handleReadFileSuccess(res, data);
+   });
+});
+
+app.get('/about', (req, res) => {
+   fs.readFile(about, "utf-8", (err, data) => {
+      if (err) handleReadFileErr(about, err, res);
+      handleReadFileSuccess(res, data);
+   });
+});
+
+app.listen(8000, () => console.log("Server is running at port 8000."));

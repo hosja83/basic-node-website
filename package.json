@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/hosja83/basic-node-website/issues"
   },
-  "homepage": "https://github.com/hosja83/basic-node-website#readme"
+  "homepage": "https://github.com/hosja83/basic-node-website#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
